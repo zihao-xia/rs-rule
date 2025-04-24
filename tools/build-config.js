@@ -1,4 +1,4 @@
-var filename = 'sealdice-js-ext.js'
+var filename = 'rs-rule.js';
 
 module.exports = {
   dev: {
@@ -8,23 +8,27 @@ module.exports = {
     // is propagated with a fallback.
     // define: { "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development") },
     // Bundles JavaScript from (see `outfile`).
-    entryPoints: ["src/index.ts"],
+    entryPoints: ['src/index.ts'],
     // Uses incremental compilation (see `chokidar.on`).
     // incremental: true,
     // Removes whitespace, etc. depending on `NODE_ENV=...`.
-    minify: process.env.NODE_ENV === "production",
+    minify: process.env.NODE_ENV === 'production',
     // Bundles JavaScript to (see `entryPoints`).
-    outfile: "dev/" + filename,
+    outfile: 'dev/' + filename,
     // Others
-    platform: "browser",
-    tsconfig: "./tsconfig.json",
+    platform: 'browser',
+    tsconfig: './tsconfig.json',
     color: true,
-    sourcemap: process.env.NODE_ENV === "production" ? false : true,
+    sourcemap: process.env.NODE_ENV === 'production' ? false : true,
     external: ['csharp', 'puerts'],
     target: 'es2020',
     treeShaking: true,
     logLevel: 'error',
-    define: {'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')},
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(
+        process.env.NODE_ENV || 'development'
+      ),
+    },
     supported: {
       'async-await': true,
     },
@@ -36,25 +40,29 @@ module.exports = {
     // is propagated with a fallback.
     // define: { "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development") },
     // Bundles JavaScript from (see `outfile`).
-    entryPoints: ["src/index.ts"],
+    entryPoints: ['src/index.ts'],
     // Uses incremental compilation (see `chokidar.on`).
     // incremental: true,
     // Removes whitespace, etc. depending on `NODE_ENV=...`.
     minify: true,
     // Bundles JavaScript to (see `entryPoints`).
-    outfile: "dist/" + filename,
+    outfile: 'dist/' + filename,
     // Others
-    platform: "browser",
-    tsconfig: "./tsconfig.json",
+    platform: 'browser',
+    tsconfig: './tsconfig.json',
     color: true,
     sourcemap: false,
     external: ['csharp', 'puerts'],
     target: 'es6',
     treeShaking: true,
     logLevel: 'error',
-    define: {'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')},
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(
+        process.env.NODE_ENV || 'development'
+      ),
+    },
     supported: {
       'async-await': true,
     },
-  }
-}
+  },
+};

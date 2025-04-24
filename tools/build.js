@@ -1,17 +1,16 @@
-const { build, buildSync } = require("esbuild");
-const path = require("path");
-const fs = require("fs");
+const { build, buildSync } = require('esbuild');
+const path = require('path');
+const fs = require('fs');
 // const fse = require('fs-extra');
 const configAll = require('./build-config');
 
-
 (async () => {
   try {
-    let buildEvn = process.env.NODE_ENV
-    let config = buildEvn == "production" ? configAll.build : configAll.build
+    let buildEvn = process.env.NODE_ENV;
+    let config = buildEvn == 'production' ? configAll.build : configAll.build;
 
-    if (buildEvn !== "production") {
-      config = configAll.dev
+    if (buildEvn !== 'production') {
+      config = configAll.dev;
     }
 
     const timerStart = Date.now();
@@ -26,9 +25,9 @@ const configAll = require('./build-config');
     const headerText = fs.readFileSync('./header.txt').toString();
     fs.writeFileSync(config.outfile, `${headerText}\n${bodyText}`);
     const timerEnd = Date.now();
-    console.log(`🔨 Built in ${timerEnd - timerStart}ms.`)
+    console.log(`🔨 Built in ${timerEnd - timerStart}ms.`);
     process.exit(0);
   } catch (e) {
     console.error(e);
   }
-})()
+})();

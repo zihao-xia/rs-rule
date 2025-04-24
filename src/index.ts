@@ -1,38 +1,61 @@
-import { sample } from "lodash-es";
-import { nameList } from "./utils";
-
 function main() {
   // 注册扩展
-  let ext = seal.ext.find('test');
+  let ext = seal.ext.find('rs-rule');
   if (!ext) {
-    ext = seal.ext.new('test', '木落', '1.0.0');
+    ext = seal.ext.new('rs-rule', 'Conatsu', '1.0.0');
     seal.ext.register(ext);
   }
 
   // 编写指令
   const cmdSeal = seal.ext.newCmdItemInfo();
-  cmdSeal.name = 'seal';
-  cmdSeal.help = '召唤一只海豹，可用.seal <名字> 命名';
+  cmdSeal.name = 'rs';
+  cmdSeal.help =
+    '固定2d6，输入“.rs<num>"，骰出结果大于等于num成功，小于num失败。2为大失败，12为大成功';
 
   cmdSeal.solve = (ctx, msg, cmdArgs) => {
-    let val = cmdArgs.getArgN(1);
-    switch (val) {
+    let border = cmdArgs.getArgN(1);
+    switch (border) {
       case 'help': {
         const ret = seal.ext.newCmdExecuteResult(true);
         ret.showHelp = true;
         return ret;
       }
       default: {
-        // 命令为 .seal XXXX，取第一个参数为名字
-        if (!val) val = sample(nameList); // 无参数，随机名字
-        seal.replyToSender(ctx, msg, `你抓到一只海豹！取名为${val}\n它的逃跑意愿为${Math.ceil(Math.random() * 100)}`);
+        if (!border) {
+          seal.replyToSender(ctx, msg, '命令格式错误');
+          return seal.ext.newCmdExecuteResult(true);
+        }
+        const num = parseInt(border);
+        if (isNaN(num)) {
+          seal.replyToSender(ctx, msg, '请输入有效的数字！');
+          return seal.ext.newCmdExecuteResult(true);
+        }
+
+        // 骰2d6
+        const dice1 = Math.floor(Math.random() * 6) + 1;
+        const dice2 = Math.floor(Math.random() * 6) + 1;
+        const result = dice1 + dice2;
+
+        // 判断结果
+        let resultText = `骰点结果：${dice1}+${dice2}=${result}`;
+        if (result === 2) {
+          resultText += '\n大失败！';
+        } else if (result === 12) {
+          resultText += '\n大成功！';
+        } else if (result >= num) {
+          resultText += '\n成功！';
+        } else {
+          resultText += '\n失败！';
+        }
+
+        seal.replyToSender(ctx, msg, resultText);
         return seal.ext.newCmdExecuteResult(true);
       }
     }
-  }
+  };
 
   // 注册命令
-  ext.cmdMap['seal'] = cmdSeal;
+  ext.cmdMap['rs'] = cmdSeal;
 }
 
 main();
