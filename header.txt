@@ -2,7 +2,7 @@
 // @name         rs规则
 // @author       Conatsu
 // @version      1.0.0
-// @description  新rs规则
+// @description  新rs规则 + 日志计时功能
 // @timestamp    1743379200
 // 2025/3/29
 // @license      MIT

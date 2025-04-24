@@ -1,3 +1,5 @@
+import { registerLogTimer } from './log-timer';
+
 function main() {
   // 注册扩展
   let ext = seal.ext.find('rs-rule');
@@ -5,6 +7,9 @@ function main() {
     ext = seal.ext.new('rs-rule', 'Conatsu', '1.0.0');
     seal.ext.register(ext);
   }
+
+  // 注册日志计时功能
+  registerLogTimer();
 
   // 编写指令
   const cmdSeal = seal.ext.newCmdItemInfo();
