@@ -41,16 +41,21 @@ function main() {
         const dice2 = Math.floor(Math.random() * 6) + 1;
         const result = dice1 + dice2;
 
+        // 获取技能名称（第二个参数）
+        const skillName = cmdArgs.getArgN(2);
+
         // 判断结果
-        let resultText = `骰点结果：${dice1}+${dice2}=${result}`;
+        let resultText = `${msg.sender.nickname}${
+          skillName ? ` - 技能检定：${skillName}` : ''
+        }\n骰点结果：${dice1}+${dice2}=${result}`;
         if (result === 2) {
-          resultText += '\n大失败！';
+          resultText += '（大失败）';
         } else if (result === 12) {
-          resultText += '\n大成功！';
+          resultText += '（大成功）';
         } else if (result >= num) {
-          resultText += '\n成功！';
+          resultText += `（大于等于${num}）\n成功`;
         } else {
-          resultText += '\n失败！';
+          resultText += `（小于${num}）\n失败`;
         }
 
         seal.replyToSender(ctx, msg, resultText);
